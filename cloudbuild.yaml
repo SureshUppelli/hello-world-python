@@ -24,4 +24,4 @@ options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
 # Your service account
-serviceAccount: projects/$PROJECT_ID/serviceAccounts/132108883594-compute@developer.gserviceaccount.com
+serviceAccount: projects/$PROJECT_ID/serviceAccounts/cloud-build@rational-diode-472010-e0.iam.gserviceaccount.com
