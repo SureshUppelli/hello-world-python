@@ -1,17 +1,27 @@
 steps:
-
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
+    args: ['build', '-t',
            'us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA']
 
-  - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'hello-world-python', 
-           '--image=us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA', 
-           '--region', 'us-central1', '--platform', 'managed', 
-           '--allow-unauthenticated']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - run
+      - deploy
+      - hello-world-python
+      - --image=us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA
+      - --region=us-central1
+      - --platform=managed
+      - --allow-unauthenticated
 
 images:
   - us-central1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/hello-world-python:$SHORT_SHA
+
+# Required when specifying a custom service account
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+
+# Your service account
+serviceAccount: projects/$PROJECT_ID/serviceAccounts/132108883594-compute@developer.gserviceaccount.com
